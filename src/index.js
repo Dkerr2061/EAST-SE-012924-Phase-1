@@ -46,5 +46,39 @@ newFoodForm.addEventListener('submit', (event) => {
 
     // write your code here
 
+    // Optimistic rendering
+    // fetch('http://localhost:3000/foods', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(newFood) 
+    // })
+
+    // Pesimistic rendering 
+    // This is the best practice but it might take some time to render on the page because it needs the response of the server to check if the response is OK.
+    
+    fetch('http://localhost:3000/foods', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(newFood) 
+    })
+    .then(response => {
+        if(response.ok) {
+            response.json()
+        .then(newFoodData => {
+            addFoodImageToRestaurantMenu(newFoodData)
+            alert('New Food was added!') //It works!
+        })
+        }
+    })
+    .catch(error => {
+        alert('Something went wrong!')
+    })
+
+
     newFoodForm.reset()
 })
