@@ -82,3 +82,4 @@ newFoodForm.addEventListener('submit', (event) => {
 
     newFoodForm.reset()
 })
+
